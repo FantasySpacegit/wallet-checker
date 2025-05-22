@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>梦幻空间钱包地址查询</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input { padding: 8px; width: 300px; }
+        button { padding: 8px 12px; margin-left: 10px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .error { color: red; margin-top: 10px; }
+        .summary { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>梦幻空间：钱包地址检索</h2>
+    <input type="text" id="walletInput" placeholder="请输入钱包地址">
+    <button onclick="search()">查询</button>
+    <div id="result"></div>
+
+    <script>
+        const data = [
+            {{
+                "钱包地址": "0x64601638b0Ef01bBF442DB6Bf83a2DFe3aa7E80A",
+                "机器名": "初级时间机器",
+                "支付售价": 100000,
+                "支付方式": "FSS",
+                "总提现usdt": 3118.91,
+                "总动态收益": 16145.14
+            }},
+            {{
+                "钱包地址": "0x64601638b0Ef01bBF442DB6Bf83a2DFe3aa7E80A",
+                "机器名": "中级时间机器",
+                "支付售价": 500000,
+                "支付方式": "FSS",
+                "总提现usdt": 3118.91,
+                "总动态收益": 16145.14
+            }}
+        ];
+
+        function search() {{
+            const wallet = document.getElementById("walletInput").value.trim().toLowerCase();
+            const filtered = data.filter(item => item.钱包地址.toLowerCase() === wallet);
+            const resultDiv = document.getElementById("result");
+
+            if (filtered.length === 0) {{
+                resultDiv.innerHTML = "<p class='error'>未找到该钱包地址的记录。</p>";
+                return;
+            }}
+
+            let html = "<table><tr><th>购买产品</th><th>支付售价</th><th>支付单位</th></tr>";
+            filtered.forEach(item => {{
+                html += `<tr>
+                    <td>${{item.机器名}}</td>
+                    <td>${{item.支付售价}}</td>
+                    <td>${{item.支付方式}}</td>
+                </tr>`;
+            }});
+            html += "</table>";
+
+            html += `<div class='summary'>
+                总提现金额：${{filtered[0].总提现usdt}} USDT<br>
+                动态总收益：${{filtered[0].总动态收益}}
+            </div>`;
+
+            resultDiv.innerHTML = html;
+        }}
+    </script>
+</body>
+</html>
