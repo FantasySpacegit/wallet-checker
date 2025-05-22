@@ -21,18 +21,8 @@
     <button onclick="search()">查询</button>
     <div id="result"></div>
 
+    <script src="data.js"></script>
     <script>
-        let data = [];
-
-        async function fetchData() {
-            try {
-                const response = await fetch("data.json");
-                data = await response.json();
-            } catch (error) {
-                document.getElementById("result").innerHTML = "<p class='error'>无法加载数据文件。</p>";
-            }
-        }
-
         function search() {
             const wallet = document.getElementById("walletInput").value.trim().toLowerCase();
             const filtered = data.filter(item => item.钱包地址.toLowerCase() === wallet);
@@ -63,8 +53,6 @@
 
             resultDiv.innerHTML = html;
         }
-
-        fetchData();
     </script>
 </body>
 </html>
